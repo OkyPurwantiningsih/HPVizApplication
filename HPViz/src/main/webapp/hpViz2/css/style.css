@@ -1,0 +1,118 @@
+body {
+  font: 12px sans-serif;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+.line2 {
+  fill: none;
+  stroke: red;
+  stroke-width: 1.5px;
+}
+
+#heatMapDiv {
+  position: relative;
+}
+#tmpHeatMap {
+  position: relative;
+}
+#heatMapNegDiv {
+  position: relative;
+  top: 248px;
+}
+#heatMapNegDiv2 {
+  position: absolute;
+  top: 248px;
+  z-index:1;
+}
+.themeRiverDiv {
+    height:280px;
+    width:49%;
+	float:left;
+}
+#areaChartDiv {
+    height:280px;
+	width:49%;
+    padding:5px;	
+	float:right;
+}
+#scatterPlotDiv {
+    width:49%;
+    padding:5px;	
+	float:right;
+	height:600px;
+}
+#hmDiv {
+	position: relative;
+}
+#radioButtonDiv{
+  padding: 5px;
+}
+#bgAxis {
+  position: absolute;
+}
+#hmCanvas {
+  position: absolute;
+  top: 20px; left: 40px;
+  z-index:2;
+   width:470px; height:500px;
+}
+.bgAxis2 {
+  position: absolute;
+}
+#hmCanvas2 {
+  position: absolute;
+  top: 20px; left: 40px;
+  z-index:2;
+   width:470px; height:500px;
+}
+.area {
+  fill: rgb(251,180,174);
+}
+
+.area2 {
+  fill: rgb(222,203,228);
+}
+.objArea {
+
+}
+#tmpHeatMap { width:470px; height:500px;}
+.topContainer{
+	width:100%;
+	height:265px;
+}
+.bottomContainer{
+	width:100%;
+	height:600px;
+}
+#heatmapLegend { 
+	background:white; 
+	position:absolute; 
+	left: 400px;
+	top:365px; 
+	width:100px; 
+	height:20px;
+}
+#min { float:left; }
+#max { float:right; }
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Streamgraph</title>
+		<!--Style CSS -->
+		<link rel="stylesheet" type="text/css" href="css/style.css"></link>
+		
+		<!-- D3 Library -->
+		<script type="text/javascript" src="js/jquery-1.11.0.js"></script>
+		<script type="text/javascript" src="js/d3.min.js"></script>
+		<script type="text/javascript" src="js/streamgraph6.js"></script>
+	</head>
+	<body>
+		<script>
+			var urlParam = function(name, w){
+				w = w || window;
+				var rx = new RegExp('[\&|\?]'+name+'=([^\&\#]+)'),
+					val = w.location.search.match(rx);
+				return !val ? '':val[1];
+			}
+			
+		var sessions = urlParam('sessions');
+		var patientName = urlParam('patientName');
+		</script>
+		<div style="width: 100%; display: table;">
+			<div style="display: table-row">
+				<div id="area1Div" style="width: 100px; display: table-cell;"></div>
+				<div id="area2Div" style="width: 100px; display: table-cell;"></div>
+				<div id="area3Div" style="width: 100px; display: table-cell;"></div>
+				<div id="area4Div" style="width: 100px; display: table-cell;"></div>
+				<div id="area5Div" style="width: 100px; display: table-cell;"></div>
+				<div id="area6Div" style="width: 100px; display: table-cell;"></div>
+				<div style="width: 30px; display: table-cell;">&nbsp;</div>
+				<div id="area7Div" style="width: 100px; display: table-cell;"></div>
+				<div style="display: table-cell;">&nbsp;</div>
+			</div>
+		</div>
+		
+	</body>
+</html>

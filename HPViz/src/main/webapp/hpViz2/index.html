@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<title>Hammer and Planks Visualization</title>
+	<!--Style CSS -->
+	<link rel="stylesheet" type="text/css" href="css/style.css"></link>
+	
+	<!-- Library jQuery, d3, sentiCompass -->
+	<script type="text/javascript" src="js/jquery-1.11.0.js"></script>
+	<script type="text/javascript" src="js/d3.min.js"></script>
+	<script type="text/javascript" src="js/hpViz3.js"></script>
+	<script type="text/javascript" src="js/heatmap.js"></script>
+</head>
+<body>
+	<script>
+
+		var urlParam = function(name, w){
+				w = w || window;
+				var rx = new RegExp('[\&|\?]'+name+'=([^\&\#]+)'),
+					val = w.location.search.match(rx);
+				return !val ? '':val[1];
+			}
+			
+		var jsonDoc = urlParam('jsonFile');
+		console.log("updated=============");
+	</script>
+	<div id="radioDiv">
+		<form>
+			<table>
+				<tr>
+					<td>Object Type:</td>
+					<td>
+						<table>
+							<tr><td><input type="radio" name="objType" id="allRadio" value="All" checked></td>
+								<td><span for="allRadio">All</span></td></tr>
+						</table>
+					</td>
+					<td>
+						<table>
+							<tr><td><input type="radio" name="objType" id="bonusRadio" value="Bonus"></td>
+								<td><span for="bonusRadio">Bonus</span></td></tr>
+						</table>
+					</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>Theme River Type:</td>
+					<td>
+						<select>
+							<option value="linear">Linear</option>
+							<option value="silhouette">Silhouette</option>
+							<option value="pos">Positive</option>
+							<option value="net-neg">Neutral-Negative</option>
+							<option value="pos-net">Positive-Neutral</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>
+						<table>
+							<tr><td><input type="radio" name="objType" id="obstacleRadio" value="Obstacle"></td>
+								<td><span for="obstacleRadio">Obstacle</span></td></tr>
+						</table>
+					</td>
+					<td>
+						<table>
+							<tr><td><input type="radio" name="objType" id="enemyRadio" value="Enemy"></td>
+								<td><span for="enemyRadio">Enemy</span></td></tr>
+						</table>
+					</td>		
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div class="topContainer">
+		<div id="themeRiverDiv"></div>
+	</div>
+	<div class="bottomContainer">
+		<div id="hmDiv">
+			<div id="bgAxis"></div>
+			<div id="hmCanvas"></div>
+		</div>
+		<div id="heatmapLegend">
+			<span id="min"></span>
+			<span id="max"></span>
+			<img id="gradient" src="" style="width:100%" />
+		</div>
+	</div>
+
+</body>
+
+</html>
