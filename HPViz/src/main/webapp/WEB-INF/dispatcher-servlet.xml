@@ -23,7 +23,7 @@
 	<!-- Define the MongoTemplate which handles connectivity with MongoDB -->
 	<beans:bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<beans:constructor-arg name="mongo" ref="mongo" />
-		<beans:constructor-arg name="databaseName" value="vapeur-patient1" />
+		<beans:constructor-arg name="databaseName" value="vapeur" />
 	</beans:bean>
 	
 	<!-- Factory bean that creates the MongoDB instance -->
