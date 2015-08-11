@@ -35,7 +35,8 @@ public class GenJSONFile {
 	    File currentDir = new File("");
 	    System.out.println("current directory: " + currentDir);
 	    //String rootDir = "src/main/webapp/hpViz2/data/";
-	    String rootDir = "C:/workspace/HPViz/src/main/webapp/hpViz2/data/";
+	    //String rootDir = "C:/workspace/HPViz/src/main/webapp/hpViz2/data/";
+	    String rootDir = "C:/Users/Advanse-/Documents/gitRepo/HPViz/src/main/webapp/hpViz2/data/";
 
 	    File theDir = new File(rootDir+dirName);
 
