@@ -27,8 +27,10 @@ import com.mongodb.MongoException;
 public class MongoData {
 	
 	private static final String DB_NAME = "vapeur-patient1";
-	private static final String rootDir = "C:/workspace/HPViz/src/main/webapp/hpViz2/data/";
-	private static final String writeRootDir = "C:/workspace/HPViz/src/main/webapp/summaryViz2/data/";
+	//private static final String rootDir = "C:/workspace/HPViz/src/main/webapp/hpViz2/data/";
+	private static final String rootDir = "C:/Users/Advanse-/Documents/gitRepo/HPViz/src/main/webapp/hpViz2/data/";
+	//private static final String writeRootDir = "C:/workspace/HPViz/src/main/webapp/summaryViz2/data/";
+	private static final String writeRootDir = "C:/Users/Advanse-/Documents/gitRepo/HPViz/src/main/webapp/summaryViz2/data/";
 	
 	public MongoData() {
 	}
