@@ -45,7 +45,8 @@ Ext.define('HammerAndPlanks.view.main.Main', {
 			xtype: 'patienttree',
 			region: 'west',
 			width: 250,
-			split: true
+			split: true,
+			collapsible: true
 		},{
 			itemId: 'panelCenter',
 			region: 'center',
