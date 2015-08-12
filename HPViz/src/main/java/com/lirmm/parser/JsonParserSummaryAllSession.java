@@ -55,7 +55,7 @@ public class JsonParserSummaryAllSession {
 
 		    current = jp.nextToken();
 
-		    if (current != JsonToken.START_ARRAY) {
+		    if (current != JsonToken.START_OBJECT) {
 			      System.out.println("Error: root should be object: quiting.");
 			      continue;
 			}
@@ -69,75 +69,83 @@ public class JsonParserSummaryAllSession {
 	    	int sessionNo = Integer.parseInt(sessionName.substring(8, sessionName.length()));
 	    	
 	    	// For each list json object, identify the eventCategory the value of each object
-
-		    if (current == JsonToken.START_ARRAY) {
-		    	while (jp.nextToken() != JsonToken.END_ARRAY) {	        					  
-		    		
-		    		JsonNode node = jp.readValueAsTree();
-		    		
-		    		Double xValue = node.get("x").asDouble();
-	    					    	
-		    		if(node.get("eventCat").asText().equals("Positive")){
-	    				JsonSummaryAllObj jsonSummaryObj = new JsonSummaryAllObj(sessionNo, xValue, "Positive");
-	    		    	positiveList.add(jsonSummaryObj);
-		    			
-		    		}
-		    		
-		    		if(node.get("eventCat").asText().equals("Neutral")){
-		    			JsonSummaryAllObj jsonSummaryObj = new JsonSummaryAllObj(sessionNo, xValue, "Neutral");
-	    		    	neutralList.add(jsonSummaryObj);
-		    		}
-
-					if(node.get("eventCat").asText().equals("Negative")){
-						JsonSummaryAllObj jsonSummaryObj = new JsonSummaryAllObj(sessionNo, xValue, "Negative");
-	    		    	negativeList.add(jsonSummaryObj);
-					}
-					
-		    	}
-		    	
-		    	
-		    }
+	    	 while (jp.nextToken() != JsonToken.END_OBJECT) {
+			    	String fieldName = jp.getCurrentName();
+			    	// move from field name to field value
+			        current = jp.nextToken();
+			        
+			    	// Start extracting data from the logs
+			        if (fieldName.equals("logs")) {
+					    if (current == JsonToken.START_ARRAY) {
+					    	while (jp.nextToken() != JsonToken.END_ARRAY) {	        					  
+					    		
+					    		JsonNode node = jp.readValueAsTree();
+					    		
+					    		Double xValue = node.get("x").asDouble();
+				    					    	
+					    		if(node.get("eventCat").asText().equals("Positive")){
+				    				JsonSummaryAllObj jsonSummaryObj = new JsonSummaryAllObj(sessionNo, xValue, "Positive");
+				    		    	positiveList.add(jsonSummaryObj);
+					    			
+					    		}
+					    		
+					    		if(node.get("eventCat").asText().equals("Neutral")){
+					    			JsonSummaryAllObj jsonSummaryObj = new JsonSummaryAllObj(sessionNo, xValue, "Neutral");
+				    		    	neutralList.add(jsonSummaryObj);
+					    		}
+			
+								if(node.get("eventCat").asText().equals("Negative")){
+									JsonSummaryAllObj jsonSummaryObj = new JsonSummaryAllObj(sessionNo, xValue, "Negative");
+				    		    	negativeList.add(jsonSummaryObj);
+								}
+								
+					    	}
+					    	
+					    	
+					    }
 		    
-		    System.out.println("pos: "+positiveList.size());
-	    	System.out.println("net: "+neutralList.size());
-	    	System.out.println("neg: "+negativeList.size());
-		    for(int j=0; j<positiveList.size(); j++){
-
-		    	// Write Object Summary for Positive Event
-		    	generator.writeStartObject();
-  			  	generator.writeFieldName("sessionName");
-		        generator.writeString(Integer.toString(positiveList.get(j).getSessionName()));
-		        generator.writeFieldName("x");
-		        generator.writeString(Double.toString(positiveList.get(j).getX()));
-		        generator.writeFieldName("eventCat");
-		        generator.writeString("Positive");
-		        generator.writeEndObject();
-		    }
-		    
-		    for(int j=0; j<neutralList.size(); j++){
-		        // Write Object Summary for Neutral Event
-		    	generator.writeStartObject();
-  			  	generator.writeFieldName("sessionName");
-		        generator.writeString(Integer.toString(neutralList.get(j).getSessionName()));
-		        generator.writeFieldName("x");
-		        generator.writeString(Double.toString(neutralList.get(j).getX()));
-		        generator.writeFieldName("eventCat");
-		        generator.writeString("Neutral");
-		        generator.writeEndObject();
-		    }
-		    
-		    for(int j=0; j<negativeList.size(); j++){
-		        // Write Object Summary for Negative Event
-		    	generator.writeStartObject();
-  			  	generator.writeFieldName("sessionName");
-		        generator.writeString(Integer.toString(negativeList.get(j).getSessionName()));
-		        generator.writeFieldName("x");
-		        generator.writeString(Double.toString(negativeList.get(j).getX()));
-		        generator.writeFieldName("eventCat");
-		        generator.writeString("Negative");
-		        generator.writeEndObject();
-		    }
-		    
+					    System.out.println("pos: "+positiveList.size());
+				    	System.out.println("net: "+neutralList.size());
+				    	System.out.println("neg: "+negativeList.size());
+					    for(int j=0; j<positiveList.size(); j++){
+			
+					    	// Write Object Summary for Positive Event
+					    	generator.writeStartObject();
+			  			  	generator.writeFieldName("sessionName");
+					        generator.writeString(Integer.toString(positiveList.get(j).getSessionName()));
+					        generator.writeFieldName("x");
+					        generator.writeString(Double.toString(positiveList.get(j).getX()));
+					        generator.writeFieldName("eventCat");
+					        generator.writeString("Positive");
+					        generator.writeEndObject();
+					    }
+					    
+					    for(int j=0; j<neutralList.size(); j++){
+					        // Write Object Summary for Neutral Event
+					    	generator.writeStartObject();
+			  			  	generator.writeFieldName("sessionName");
+					        generator.writeString(Integer.toString(neutralList.get(j).getSessionName()));
+					        generator.writeFieldName("x");
+					        generator.writeString(Double.toString(neutralList.get(j).getX()));
+					        generator.writeFieldName("eventCat");
+					        generator.writeString("Neutral");
+					        generator.writeEndObject();
+					    }
+					    
+					    for(int j=0; j<negativeList.size(); j++){
+					        // Write Object Summary for Negative Event
+					    	generator.writeStartObject();
+			  			  	generator.writeFieldName("sessionName");
+					        generator.writeString(Integer.toString(negativeList.get(j).getSessionName()));
+					        generator.writeFieldName("x");
+					        generator.writeString(Double.toString(negativeList.get(j).getX()));
+					        generator.writeFieldName("eventCat");
+					        generator.writeString("Negative");
+					        generator.writeEndObject();
+					    }
+			        }
+	    	 }
+					    
 		}
 		
 		generator.writeEndArray();
