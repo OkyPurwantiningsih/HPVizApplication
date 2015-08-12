@@ -18,11 +18,30 @@ public class JsonParserSummaryAllSession {
 	public JsonParserSummaryAllSession() {
 	}
 	
-	public Boolean writeSummary(List<JsonFile> fileList) throws JsonParseException, IOException{
+	public Boolean writeSummary(List<JsonFile> fileList, String rootDir, String writeDir) throws JsonParseException, IOException{
 		
+		 String dataDir = fileList.get(0).getDirectory();
+		 File theDir = new File(writeDir+dataDir);
+
+		 // if the directory does not exist, create it
+		 if (!theDir.exists()) {
+		     System.out.println("creating directory: " + dataDir);
+		     boolean result = false;
+	
+		     try{
+		         theDir.mkdir();
+		         result = true;
+		     } 
+		     catch(SecurityException se){
+		         //handle it
+		     }        
+		     if(result) {    
+		         System.out.println("DIR created");  
+		     }
+		 }
+		 
 		JsonFactory factory = new JsonFactory();
-        JsonGenerator generator = factory.createGenerator(new FileWriter(new File(fileList.get(0).getDirectory()+"/"+"summaryAllSession.json")));
-		//JsonGenerator generator = factory.createGenerator(new FileWriter(new File("summary.json")));
+        JsonGenerator generator = factory.createGenerator(new FileWriter(new File(writeDir + dataDir+"/"+"summary.json")));//JsonGenerator generator = factory.createGenerator(new FileWriter(new File("summary.json")));
 		
 		//Start Writing Array
         generator.writeStartArray();
@@ -31,7 +50,7 @@ public class JsonParserSummaryAllSession {
 			
 		    System.out.println(fileList.get(i).getSessionName());
 			JsonFactory f = new MappingJsonFactory();
-		    JsonParser jp = f.createParser(new File(fileList.get(i).getFileLocation()+".json"));
+		    JsonParser jp = f.createParser(new File(rootDir + fileList.get(i).getFileLocation()+".json"));
 		    JsonToken current;
 
 		    current = jp.nextToken();
