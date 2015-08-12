@@ -15,7 +15,7 @@ import org.bson.types.ObjectId;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.lirmm.parser.JsonFile;
 import com.lirmm.parser.JsonParserSummary;
-import com.lirmm.summary.JsonParserSummaryAllSession;
+import com.lirmm.parser.JsonParserSummaryAllSession;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -221,7 +221,7 @@ public class MongoData {
 					// write summary by putting together all the data in each session in one json file
 					 // so that it will be easier to read from d3js
 					 JsonParserSummaryAllSession summaryAll = new JsonParserSummaryAllSession();
-					 Boolean isWritten = summaryAll.writeSummary(jsonFiles);
+					 Boolean isWritten = summaryAll.writeSummary(jsonFiles, rootDir, writeRootDir);
 					 
 					 if(isWritten){
 				        	System.out.println("SummaryAll.json File is written in "+jsonFiles.get(0).getDirectory());

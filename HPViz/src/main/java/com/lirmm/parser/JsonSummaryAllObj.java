@@ -1,6 +1,5 @@
 package com.lirmm.parser;
 
-package com.lirmm.summary;
 
 public class JsonSummaryAllObj {
 	private int sessionName;
