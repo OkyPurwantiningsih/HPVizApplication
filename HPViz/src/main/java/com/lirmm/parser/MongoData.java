@@ -224,7 +224,7 @@ public class MongoData {
 					 Boolean isWritten = summaryAll.writeSummary(jsonFiles, rootDir, writeRootDir);
 					 
 					 if(isWritten){
-				        	System.out.println("SummaryAll.json File is written in "+jsonFiles.get(0).getDirectory());
+				        	System.out.println("summaryAllSession.json File is written in "+jsonFiles.get(0).getDirectory());
 				     }
 				 
 				 }

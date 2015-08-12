@@ -361,7 +361,8 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 						handler: onMinimize                     
 					}   
 				],
-				html: "<iframe src='/hp/summaryViz2/index.html?sessions="+selSessionsText+"&patientName="+patientName+"' width='100%' height='100%' id='viz_iframe'></iframe>"
+				//html: "<iframe src='/hp/summaryViz2/index.html?sessions="+selSessionsText+"&patientName="+patientName+"' width='100%' height='100%' id='viz_iframe'></iframe>"
+				html: "<iframe src='/hp/hpSummary/index.html?sessions="+selSessionsText+"&patientName="+patientName+"' width='100%' height='100%' id='viz_iframe'></iframe>"
 			}).show();
 			
 			

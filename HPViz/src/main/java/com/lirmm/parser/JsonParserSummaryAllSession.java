@@ -41,7 +41,7 @@ public class JsonParserSummaryAllSession {
 		 }
 		 
 		JsonFactory factory = new JsonFactory();
-        JsonGenerator generator = factory.createGenerator(new FileWriter(new File(writeDir + dataDir+"/"+"summary.json")));//JsonGenerator generator = factory.createGenerator(new FileWriter(new File("summary.json")));
+        JsonGenerator generator = factory.createGenerator(new FileWriter(new File(writeDir + dataDir+"/"+"summaryAllSession.json")));//JsonGenerator generator = factory.createGenerator(new FileWriter(new File("summary.json")));
 		
 		//Start Writing Array
         generator.writeStartArray();
