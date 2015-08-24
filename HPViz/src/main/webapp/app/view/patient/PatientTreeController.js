@@ -95,6 +95,7 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 						sessionID: sessionStore.data.items[i].data.id,
 						date: sessionStore.data.items[i].data.date,
 						fileLoc: sessionStore.data.items[i].data.fileLocation,
+						exercise: sessionStore.data.items[i].data.exercise,
 						leaf: true,
 						checked: false
 					});
@@ -243,7 +244,7 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 		var selectedNode = pTree.getSelectionModel().getSelection()[0];
 		var patName = selectedNode.parentNode.get('name');
 		var patientName = selectedNode.get('name').replace(/\s+/g, '').toLowerCase();
-		var windowTitle = patName+' - '+selectedNode.get('name'),
+		var windowTitle = patName+' - '+selectedNode.get('name')+' - '+selectedNode.get('exercise'),
 			windowId = windowTitle.replace(/\s/g, "") ;
 		var fileLoc = selectedNode.get('fileLoc');
 		var selNodeName = new String(selectedNode.get('name'));
