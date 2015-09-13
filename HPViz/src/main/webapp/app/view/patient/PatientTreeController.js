@@ -88,10 +88,13 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 		var date = '';
 		var fileLocation = '';
 		var sessionID = '';
+		var exercise = '';//new added
 		var onClickAddAllSession = function(){	
-				for(var i = 0; i < sessionStore.getTotalCount(); i++){
+				//for(var i = 0; i < sessionStore.getTotalCount(); i++){
+				for(var i = 0; i < 10; i++){ // The grid is paginated, each page shows 10 records
 					selectedNode.appendChild({
-						name: sessionStore.data.items[i].data.sessionName,
+						name: sessionStore.data.items[i].data.sessionName+' - '+sessionStore.data.items[i].data.exercise,
+						sessionName: sessionStore.data.items[i].data.sessionName,
 						sessionID: sessionStore.data.items[i].data.id,
 						date: sessionStore.data.items[i].data.date,
 						fileLoc: sessionStore.data.items[i].data.fileLocation,
@@ -117,6 +120,7 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 						date = this.selected.items[0].data.date;
 						fileLocation = this.selected.items[0].data.fileLocation;
 						sessionID = this.selected.items[0].data.id;
+						exercise = this.selected.items[0].data.exercise;//new added
 					}
 				}
 			},
@@ -128,9 +132,20 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 				{ text: 'Session No', dataIndex: 'sessionNo', width: 100 },
 				{ text: 'Date',  dataIndex: 'date', width: 100 }
 			],*/
+			xtype: 'paging-grid',
+			height: 295,
+			width: 390,
+			tbar: {
+                xtype: 'pagingtoolbar',
+                store: sessionStore,
+                displayInfo: true,
+                displayMsg: 'Displaying {0} to {1} of {2}&nbsp;',
+                emptyMsg: "No records to display&nbsp;"
+            },
 			columns:[
 				{ xtype: 'rownumberer'},
-				{ text: 'Session Name', dataIndex: 'sessionName', width: 200 },
+				{ text: 'Session Name', dataIndex: 'sessionName', width: 100 },
+				{ text: 'Exercise Type', dataIndex: 'exercise', width: 100 },
 				{ text: 'Date',  dataIndex: 'date', width: 150 }
 			],
 			// inline buttons
@@ -148,10 +163,12 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 								click: function(){
 										
 										selectedNode.appendChild({
-											name: sessionName,
+											name: sessionName+' - '+exercise,
+											sessionName: sessionName,
 											sessionID: sessionID,
 											date: date,
 											fileLoc: fileLocation,
+											exercise: exercise,//new added
 											leaf: true,
 											checked: false
 										});
@@ -171,8 +188,8 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 		
 		Ext.create('Ext.window.Window',{
 			title: 'Add Session',
-			height: 400,
-			width: 400,
+			height: 350,
+			width: 395,
 			items: [grid]
 		}).show();
 		
@@ -191,11 +208,21 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 		var gridPatient = Ext.create('Ext.grid.Panel', {
 			columnLines: true,
 			store: patientStore,
-
+			xtype: 'paging-grid',
+			height: 295,
+			width: 430,
+			tbar: {
+                xtype: 'pagingtoolbar',
+                store: patientStore,
+                displayInfo: true,
+                displayMsg: 'Displaying {0} to {1} of {2} &nbsp;records ',
+                emptyMsg: "No records to display&nbsp;"
+            },
 			columns:[
 				{ xtype: 'rownumberer'},
 				{ text: 'First Name', dataIndex: 'firstName', width: 100 },
 				{ text: 'Last Name', dataIndex: 'lastName', width: 100},
+				{ text: 'Gender', dataIndex: 'gender', width: 100},
 				{ text: 'Birth Date',  dataIndex: 'birthDate', width: 100 }
 			],
 			selModel: {
@@ -228,12 +255,13 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 					}
 				}
 			}]
+			
 		});
 		
 		Ext.create('Ext.window.Window',{
 			title: 'Add Patient',
-			height: 400,
-			width: 350,
+			height: 350,
+			width: 440,
 			//autoScroll: true,
 			items: [gridPatient]
 		}).show();
@@ -244,7 +272,7 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 		var selectedNode = pTree.getSelectionModel().getSelection()[0];
 		var patName = selectedNode.parentNode.get('name');
 		var patientName = selectedNode.get('name').replace(/\s+/g, '').toLowerCase();
-		var windowTitle = patName+' - '+selectedNode.get('name')+' - '+selectedNode.get('exercise'),
+		var windowTitle = patName+' - '+selectedNode.get('name'),
 			windowId = windowTitle.replace(/\s/g, "") ;
 		var fileLoc = selectedNode.get('fileLoc');
 		var selNodeName = new String(selectedNode.get('name'));
@@ -324,8 +352,8 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 			
 			Ext.Array.each(checkedSessions, function(rec){
 				if(rec.parentNode.get('name').valueOf() == selectedNode.get('name').valueOf()){
-					selectedSessions.push(rec.get('name'));
-					selSessionsText = selSessionsText + rec.get('name').split(" ")[1]+','
+					selectedSessions.push(rec.get('sessionName'));
+					selSessionsText = selSessionsText + rec.get('sessionName').split(" ")[1]+','
 				}
 				
 			});
@@ -363,7 +391,7 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 					}   
 				],
 				//html: "<iframe src='/hp/summaryViz2/index.html?sessions="+selSessionsText+"&patientName="+patientName+"' width='100%' height='100%' id='viz_iframe'></iframe>"
-				html: "<iframe src='/hp/hpSummary/index2.html?sessions="+selSessionsText+"&patientName="+patientName+"' width='100%' height='100%' id='viz_iframe'></iframe>"
+				html: "<iframe src='/hp/hpSummary/index.html?sessions="+selSessionsText+"&patientName="+patientName+"' width='100%' height='100%' id='viz_iframe'></iframe>"
 			}).show();
 			
 			

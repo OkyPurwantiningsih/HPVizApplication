@@ -12,9 +12,11 @@ Ext.define('HammerAndPlanks.store.Sessions', {
 		model: 'HammerAndPlanks.model.Session',
         reader: {
             type: 'json',
-            root: 'session',
-            successProperty: 'success'
+            rootProperty: 'session',
+            successProperty: 'success',
+			totalProperty: 'total'
         }
-    }
+    },
+	pageSize: 10
 
 });

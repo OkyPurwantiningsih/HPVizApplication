@@ -19,7 +19,16 @@ public static final String COLLECTION_NAME = "patients";
 	@Autowired
     private MongoTemplate mongoTemplate;
 	
-	public List<Patient> getAllPatients() {
-        return mongoTemplate.findAll(Patient.class, COLLECTION_NAME);
+	public List<Patient> getAllPatients(int skip, int limit) {
+        //return mongoTemplate.findAll(Patient.class, COLLECTION_NAME);
+		Query queryPatient = new Query();
+
+		queryPatient.skip(skip).limit(limit);
+
+        return mongoTemplate.find(queryPatient, Patient.class, COLLECTION_NAME);
     }
+	
+	public long getCount(){
+		return mongoTemplate.count(new Query(), COLLECTION_NAME);
+	}
 }

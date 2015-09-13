@@ -11,10 +11,12 @@ Ext.define('HammerAndPlanks.store.PatientListStore', {
 		model: 'HammerAndPlanks.model.PatientListModel',
         reader: {
             type: 'json',
-            root: 'patients',
-            successProperty: 'success'
+            rootProperty: 'patients',
+            successProperty: 'success',
+			totalProperty: 'total'
         }
 
-    }
+    },
+	pageSize: 10
 
 });

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -55,25 +56,37 @@ public class RestController {
 	
 	@RequestMapping(value="/patients", method = RequestMethod.GET)
 	@ResponseBody
-	public multiplePatientResponse getAllPatients() {
-		logger.info("Inside getAllPatients() method...");
-
-		List<Patient> allPatients = patientRepository.getAllPatients();
-		multiplePatientResponse extResp = new multiplePatientResponse(true, allPatients);
+	public multiplePatientResponse getAllPatients(@RequestParam("page") String page, @RequestParam("start") String recStart, @RequestParam("limit") String limit){
+		
+		// Calculate start of document to retrieve
+		int size = Integer.parseInt(limit);
+		int skip = Integer.parseInt(page) > 0 ? ((Integer.parseInt(page) - 1)*size): 0; 
+		
+		logger.info("Inside getAllPatients() method, with skipping "+skip);
+		
+		// Query to mongoDB
+		List<Patient> allPatients = patientRepository.getAllPatients(skip, size);
+		int total = (int) patientRepository.getCount();
+		multiplePatientResponse extResp = new multiplePatientResponse(true, allPatients, total);
 		
 		return extResp;
 	}
 	
 	@RequestMapping(value="/sessions/{patientID}", method=RequestMethod.GET)
 	@ResponseBody
-	public multipleSessionResponse getSessionByPatientID(@PathVariable("patientID") String patientID) {
+	public multipleSessionResponse getSessionByPatientID(@PathVariable("patientID") String patientID, @RequestParam("page") String page, @RequestParam("start") String recStart, @RequestParam("limit") String limit) {
 		
 		//Update PatientSession collection
-		MongoData mongoData = new MongoData();
-		mongoData.UpdateSessionPatient();
+		//MongoData mongoData = new MongoData();
+		//mongoData.UpdateSessionPatient();
 		
+		// Calculate start of document to retrieve
+		int size = Integer.parseInt(limit);
+		int skip = Integer.parseInt(page) > 0 ? ((Integer.parseInt(page) - 1)*size): 0; 
+				
 		//get session for the patient
-		List<Session> foundSession = sessionRepository.getSessionByPatientID(patientID);
+		List<Session> foundSession = sessionRepository.getSessionByPatientID(patientID, skip, size);
+		int total = (int) sessionRepository.getCount(patientID);
 		
 		if (foundSession != null) {
 			logger.info("Inside getSessionByPatientID, returned: " + foundSession.size() + " sessions");
@@ -81,7 +94,7 @@ public class RestController {
 			logger.info("Inside getSessionByPatientID, session for patient: " + patientID + ", NOT FOUND!");
 		}
 		
-		multipleSessionResponse extResp = new multipleSessionResponse(true, foundSession);
+		multipleSessionResponse extResp = new multipleSessionResponse(true, foundSession, total);
 		return extResp; 
 	}
 	

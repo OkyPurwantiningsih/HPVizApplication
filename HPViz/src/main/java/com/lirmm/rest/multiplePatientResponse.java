@@ -6,10 +6,12 @@ import java.util.List;
 public class multiplePatientResponse {
 	private boolean success;
 	private List<Patient> patients;
+	private int total;
 	
-	public multiplePatientResponse(boolean success, List<Patient> patient) {
+	public multiplePatientResponse(boolean success, List<Patient> patient, int total) {
 		this.success = success;
 		this.patients = patient;
+		this.total = total;
 	}
 	
 	public boolean isSuccess() {
@@ -23,5 +25,11 @@ public class multiplePatientResponse {
 	}
 	public void setPatient(List<Patient> patients) {
 		this.patients = patients;
+	}
+	public int getTotal(){
+		return total;
+	}
+	public void setTotal(int total){
+		this.total = total;
 	}
 }

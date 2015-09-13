@@ -20,8 +20,11 @@ public static final String COLLECTION_NAME = "patientSession2";
 	@Autowired
     private MongoTemplate mongoTemplate;
 	
-	public  List<Session> getSessionByPatientID(String patientID) {
+	public  List<Session> getSessionByPatientID(String patientID, int skip, int limit) {
 	    return mongoTemplate.find(
-	    		Query.query(Criteria.where("patientID").is(patientID)), Session.class, COLLECTION_NAME);
+	    		Query.query(Criteria.where("patientID").is(patientID)).skip(skip).limit(limit), Session.class, COLLECTION_NAME);
+	}
+	public long getCount(String patientID){
+		return mongoTemplate.count(Query.query(Criteria.where("patientID").is(patientID)), COLLECTION_NAME);
 	}
 }
