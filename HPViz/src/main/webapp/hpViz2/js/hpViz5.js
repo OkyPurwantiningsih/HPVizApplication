@@ -3,7 +3,8 @@ var data, dataAllGrouped, dataPosGrouped, dataNetGrouped, dataNegGrouped;
 var leftChartWidth = 550,
 	topChartHeight = 250,
 	rightChartWidth = 650,
-	bottomChartHeight = 550;
+	bottomChartHeight = 500;
+	//bottomChartHeight = 550;
 // Define Variables for HeatMap
 var hmArrColLen, hmArray, hmYAxisText = "Screen Speed (s)";
 var hmMargin, hmWidth, hmHeight, hmXValue, hmXScale, hmXMap, hmBottomXAxis, hmTopXAxis, 
@@ -96,6 +97,7 @@ function DrawGraph(){
 			hmMaxY = d3.max(hmArray, hmYValue)+2;
 			hmXScale.domain([minX-1, maxX+1]);
 			//hmYScale.domain([hmMaxY*(-1), hmMaxY]);
+			//hmYScale.domain([-1.45, 1.45]);
 			hmYScale.domain([-1.2, 1.2]);
 			
 			drawHeatMapAxis();
@@ -938,9 +940,16 @@ function drawHeatMap(){
 		height = 500;
 		
 	// Find max y
-	for(var i=0; i<hmArray.length; i++){
+	/*for(var i=0; i<hmArray.length; i++){
 		if(hmArray[i].y > yMax) {yMax = hmArray[i].y}
+	}*/
+	//===============
+	maxV = d3.max(hmArray, function(d){return d.y;});
+	minV = d3.min(hmArray, function(d){return d.y;});
+	if((maxV>0) && (minV<0)){
+		if(maxV>(minV*(-1))) yMax=maxV; else yMax=(minV*(-1));
 	}
+	//===============
 	var arrScale = d3.scale.linear().range([-1, 1]);
 	arrScale.domain([yMax*(-1), yMax]);
 	for(var j=0; j<hmArray.length; j++){
