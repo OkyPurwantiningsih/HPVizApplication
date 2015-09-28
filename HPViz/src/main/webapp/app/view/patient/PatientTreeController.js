@@ -280,6 +280,7 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 		var onMaximize = function(window,opts){
 							window.expand();
 							window.setWidth(parentPanel.getWidth());
+							//window.setWidth(800);
 						};
 		var onRestore = function( evt,toolEl,owner,tool ) {
 							var window = owner.up( 'window' );
@@ -307,13 +308,13 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 				title: windowTitle,
 				constrain: true,
 				constrainTo: parentPanel.getEl(),
-				height: 200,
-				width: 400,
+				height: 900,
+				width: 720,
 				resizable: true,
 				layout: 'fit',
 				//minimizable: true,
 				maximizable: true,
-				html: "<iframe src='/hp/hpViz2/index2.html?jsonFile="+fileLoc+"' width='100%' height='100%' id='viz_iframe'></iframe>",
+				html: "<iframe src='/hp/hpViz2/index.html?jsonFile="+fileLoc+"' width='100%' height='100%' id='viz_iframe'></iframe>",
 				listeners: {
 					/*'minimize': function(window, opts) {
 							window.collapse();
@@ -365,8 +366,8 @@ Ext.define('HammerAndPlanks.view.patient.PatientTreeController', {
 				title: 'Summary',
 				constrain: true,
 				constrainTo: parentPanel.getEl(),
-				height: 200,
-				width: 400,
+				height: 700,
+				width: 1100,
 				resizable: true,
 				layout: 'fit',
 				//minimizable: true,

@@ -946,8 +946,11 @@ function drawHeatMap(){
 	//===============
 	maxV = d3.max(hmArray, function(d){return d.y;});
 	minV = d3.min(hmArray, function(d){return d.y;});
-	if((maxV>0) && (minV<0)){
+	if((maxV>=0) && (minV<0)){
 		if(maxV>(minV*(-1))) yMax=maxV; else yMax=(minV*(-1));
+	}
+	if((maxV>0) && (minV==0)){
+		yMax=maxV;
 	}
 	//===============
 	var arrScale = d3.scale.linear().range([-1, 1]);
